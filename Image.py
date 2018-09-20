@@ -10,5 +10,8 @@ class Image:
             getPath: Retourne le chemin de l'image
     """
 
-    def __init__(self, String path)
+    def __init__(self, path = ""):
         self.path = path
+
+    def getPath(self):
+        return self.path
