@@ -54,6 +54,30 @@ class Personnage(ABC):
     def getEquipment(self):
         return self.equipments
 
+    def getName(self):
+        return self.name
+
+    def setName(self, name):
+        self.name = name
+
+    def getLife(self):
+        return self.life
+
+    def setLife(self, life):
+        self.life = life
+
+    def setImage(self, path):
+        self.image = path
+
+    def getImage(self):
+        return self.image
+
+    def setPosition(self, position):
+        self.position = position
+
+    def getPosition(self):
+        return self.position
+
 
 
 """
