@@ -2,56 +2,74 @@
     Module Equipments
 """
 
-from abc import ABC
 from Image import Image
 
-class Equipment(ABC):
-    """
-    Classe abstraite equipment    
-    """
-    def __init__(self, name="defaultEquipment", timelapse=100, image=Image()):
+class Equipment():
+
+    def __init__(self, name, timelapse, image):
         """
         Constructeur de la classe Equipment
         """
-        self.name = name
-        self.timelapse = timelapse
-        self.image = image
+        self._name = name
+        self._timelapse = timelapse
+        self._image = image
         
     @property
     def name(self):
-        return self.name
+        print("fndui")
+        return self._name
 
     @name.setter
     def name(self, name):
-        self.name = name
+        self._name = name
 
     @property
     def timelapse(self):
-        return self.timelapse
+        return self._timelapse
 
     @timelapse.setter
     def timelapse(self, timelapse):
-        self.timelapse = timelapse
+        self._timelapse = timelapse
 
     @property
     def image(self):
-        return self.image
+        return self._image
 
     @image.setter
     def image(self, image):
-        self.image = image
+        self._image = image
 
 
 
 
-class Weapon(Equipment, ABC):
-"""
-Classe Weapon representant un arme
-"""
-
-    def __init__(self, name="defaultEquipment", timelapse=100, image=Image(), firePower=100):
-        super(Weapon, self).__init__(name, timelapse, image)
-        self.firePower = firePower 
+class Weapon(Equipment):
+    """
+    Classe Weapon representant un arme
+    """
+    def __init__(self, name, timelapse, image, firePower):
+        super().__init__(name, timelapse, image)
+        self._firePower = firePower
 
     def attack(self):
-        pass
+        raise NotImplementedException()
+
+class DefaultPistol(Weapon):
+    """
+    Classe representant le pistolet par defaut pour les personnages
+    """
+    def __init__(self, name="defaultEquipment", timelapse=100, image=Image(), firePower=100):
+        super().__init__(name, timelapse, image, firePower)
+
+    def attack(self):
+        raise NotImplementedException()
+
+
+class FlameThrower(Weapon):
+    """
+    Classe representant un lance flame utilises par les personnages
+    """
+    def __init__(self, name="defaultEquipment", timelapse=100, image=Image(), firePower=100):
+        super().__init__(name, timelapse, image, firePower)
+
+    def attack(self):
+        raise NotImplementedException()
