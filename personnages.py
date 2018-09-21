@@ -24,11 +24,11 @@ class Personnage(ABC):
         """
         Constructeur par defaut du personnage
         """
-        self.name = name
-        self.life = life
-        self.equipments = equipments
-        self.image = image
-        self.position = position
+        self._name = name
+        self._life = life
+        self._equipments = equipments
+        self._image = image
+        self._position = position
         super().__init__()
 
     @abstractmethod
@@ -45,40 +45,49 @@ class Personnage(ABC):
         """
         pass
 
+    @property
+    def equipment(self):
+        return self._equipments
+
     def addEquipment(self, equipment):
-        self.equipments.append(equipment)
-    
+        self._equipments.append(equipment)
+
     def removeEquipment(self):
-        self.equipments.pop()
+        self._equipments.pop()
 
-    def getEquipment(self):
-        return self.equipments
+    @property
+    def name(self):
+        return self._name
 
-    def getName(self):
-        return self.name
+    @name.setter
+    def name(self, name):
+        self._name = name
 
-    def setName(self, name):
-        self.name = name
+    @property
+    def life(self):
+        return self._life
 
-    def getLife(self):
-        return self.life
+    @life.setter
+    def life(self, life):
+        self._life = life
 
-    def setLife(self, life):
-        self.life = life
+    @property
+    def image(self):
+        return self._image
 
-    def setImage(self, path):
-        self.image = path
+    @image.setter
+    def image(self, path):
+        self._image = path
 
-    def getImage(self):
-        return self.image
+    @property
+    def position(self):
+        return self._position
 
-    def setPosition(self, position):
-        self.position = position
+    @position.setter
+    def position(self, position):
+        self._position = position
 
-    def getPosition(self):
-        return self.position
-
-
+    
 
 """
 Classe representant un hero du jeu Zompy
