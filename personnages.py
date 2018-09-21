@@ -19,7 +19,7 @@ class Personnage():
        removeEquipment: Retire un equipement de la liste d'equipements
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+    def __init__(self, name, life, equipments, image, position):
         """
         Constructeur par defaut du personnage
         """
@@ -97,8 +97,8 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+        super().__init__(name, life, equipments, image, position)
 
     def move(self):
         raise NotImplementedError
@@ -117,8 +117,8 @@ class Ennemi(Personnage):
     Classe Ennemi heritant de Personnage
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+        super().__init__(name, life, equipments, image, position)
 
         def move(self):
             raise NotImplementedError
