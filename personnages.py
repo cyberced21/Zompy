@@ -28,16 +28,13 @@ class Personnage():
         self._equipments = equipments
         self._image = image
         self._position = position
-        super().__init__()
 
-    @abstractmethod
     def move(self):
         """
         Methode abstraite qui deplace le personnage
         """
         raise NotImplementedError
 
-    @abstractmethod
     def attack(self):
         """
         Methode abstraite qui fait attaquer le personnage
@@ -46,6 +43,16 @@ class Personnage():
 
     @property
     def equipment(self):
+        """
+        >>> p = Hero()
+        >>> p.addEquipment("a")
+        >>> p.addEquipment("b")
+        >>> p.equipment
+        ['a', 'b']
+        >>> p.removeEquipment()
+        >>> p.equipment
+        ['a']
+        """
         return self._equipments
 
     def addEquipment(self, equipment):
@@ -125,3 +132,8 @@ class Ennemi(Personnage):
 
         def attack(self):
             raise NotImplementedError
+
+            
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
