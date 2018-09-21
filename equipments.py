@@ -51,7 +51,7 @@ class Weapon(Equipment):
         self._firePower = firePower
 
     def attack(self):
-        raise NotImplementedException()
+        raise NotImplementedError
 
 class DefaultPistol(Weapon):
     """
@@ -61,7 +61,7 @@ class DefaultPistol(Weapon):
         super().__init__(name, timelapse, image, firePower)
 
     def attack(self):
-        raise NotImplementedException()
+        raise NotImplementedError
 
 
 class FlameThrower(Weapon):
@@ -72,4 +72,4 @@ class FlameThrower(Weapon):
         super().__init__(name, timelapse, image, firePower)
 
     def attack(self):
-        raise NotImplementedException()
+        raise NotImplementedError
