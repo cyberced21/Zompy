@@ -1,11 +1,10 @@
 """
-Classe abstraite representant un Personnage dans le jeu Zompy
+Classe representant un Personnage dans le jeu Zompy
 """
 
-from abc import ABC, abstractmethod
 from Image import Image
 
-class Personnage(ABC):
+class Personnage():
     """
     Attributs:
        int: life
@@ -36,14 +35,14 @@ class Personnage(ABC):
         """
         Methode abstraite qui deplace le personnage
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def attack(self):
         """
         Methode abstraite qui fait attaquer le personnage
         """
-        pass
+        raise NotImplementedError
 
     @property
     def equipment(self):
@@ -102,10 +101,10 @@ class Hero(Personnage):
         super().__init__()
 
     def move(self):
-        pass
+        raise NotImplementedError
 
     def attack(self):
-        pass
+        raise NotImplementedError
 
 
 
@@ -122,7 +121,7 @@ class Ennemi(Personnage):
         super().__init__()
 
         def move(self):
-            pass
+            raise NotImplementedError
 
         def attack(self):
-            pass
+            raise NotImplementedError
