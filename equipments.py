@@ -43,6 +43,7 @@ class Equipment(ABC):
 
 
 
+
 class Weapon(Equipment, ABC):
 """
 Classe Weapon representant un arme
