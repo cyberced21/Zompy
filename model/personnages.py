@@ -1,11 +1,10 @@
 """
-Classe abstraite representant un Personnage dans le jeu Zompy
+Classe representant un Personnage dans le jeu Zompy
 """
 
-from abc import ABC, abstractmethod
 from Image import Image
 
-class Personnage(ABC):
+class Personnage():
     """
     Attributs:
        int: life
@@ -20,7 +19,7 @@ class Personnage(ABC):
        removeEquipment: Retire un equipement de la liste d'equipements
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+    def __init__(self, name, life, equipments, image, position):
         """
         Constructeur par defaut du personnage
         """
@@ -29,24 +28,31 @@ class Personnage(ABC):
         self._equipments = equipments
         self._image = image
         self._position = position
-        super().__init__()
 
-    @abstractmethod
     def move(self):
         """
         Methode abstraite qui deplace le personnage
         """
-        pass
+        raise NotImplementedError
 
-    @abstractmethod
     def attack(self):
         """
         Methode abstraite qui fait attaquer le personnage
         """
-        pass
+        raise NotImplementedError
 
     @property
     def equipment(self):
+        """
+        >>> p = Hero()
+        >>> p.addEquipment("a")
+        >>> p.addEquipment("b")
+        >>> p.equipment
+        ['a', 'b']
+        >>> p.removeEquipment()
+        >>> p.equipment
+        ['a']
+        """
         return self._equipments
 
     def addEquipment(self, equipment):
@@ -98,14 +104,14 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+        super().__init__(name, life, equipments, image, position)
 
     def move(self):
-        pass
+        raise NotImplementedError
 
     def attack(self):
-        pass
+        raise NotImplementedError
 
 
 
@@ -118,11 +124,16 @@ class Ennemi(Personnage):
     Classe Ennemi heritant de Personnage
     """
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+        super().__init__(name, life, equipments, image, position)
 
         def move(self):
-            pass
+            raise NotImplementedError
 
         def attack(self):
-            pass
+            raise NotImplementedError
+
+            
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
