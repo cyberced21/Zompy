@@ -3,8 +3,6 @@
 """
 
 import pygame
-from Image import Image
-pygame.init()
 
 class Equipment():
 
@@ -75,3 +73,19 @@ class FlameThrower(Weapon):
 
     def attack(self):
         raise NotImplementedError
+
+class Balle(pygame.sprite.Sprite):
+	def  __init__(self, x, y):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.Surface((3, 10))
+		self.image.fill((255, 255, 255))
+		self.rect = self.image.get_rect()
+		self.rect.bottom = y
+		self.rect.centerx = x
+		self.speedy = -10
+
+	def update(self):
+		self.rect.y += self.speedy
+		# On detruit si la balle est hors de la fenetre
+		if self.rect.bottom < 0:
+			self.kill()
