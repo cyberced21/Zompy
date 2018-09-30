@@ -2,7 +2,9 @@
     Module Equipments
 """
 
+import pygame
 from Image import Image
+pygame.init()
 
 class Equipment():
 
@@ -13,7 +15,7 @@ class Equipment():
         self._name = name
         self._timelapse = timelapse
         self._image = image
-        
+         
     @property
     def name(self):
         print("fndui")
