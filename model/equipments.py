@@ -74,7 +74,7 @@ class FlameThrower(Weapon):
     def attack(self):
         raise NotImplementedError
 
-class Balle(pygame.sprite.Sprite):
+class Bullet(pygame.sprite.Sprite):
 	def  __init__(self, x, y):
 		pygame.sprite.Sprite.__init__(self)
 		self.image = pygame.Surface((3, 10))
