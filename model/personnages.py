@@ -2,9 +2,11 @@
 Classe representant un Personnage dans le jeu Zompy
 """
 
-from Image import Image
+import pygame
+import random
+from constantes import *
 
-class Personnage():
+class Personnage(pygame.sprite.Sprite):
     """
     Attributs:
        int: life
@@ -23,17 +25,38 @@ class Personnage():
         """
         Constructeur par defaut du personnage
         """
+        pygame.sprite.Sprite.__init__(self)
         self._name = name
         self._life = life
         self._equipments = equipments
-        self._image = image
+        self.image = image
+        self.rect = self.image.get_rect()
         self._position = position
+        self.speedX = 0
+        self.speedY = 0
 
-    def move(self):
-        """
-        Methode abstraite qui deplace le personnage
-        """
-        raise NotImplementedError
+    def update(self):
+        self.speedx = 0
+        self.speedy = 0
+        keystate = pygame.key.get_pressed()
+        if keystate[pygame.K_a]:
+            self.speedX = -5
+        if keystate[pygame.K_d]:
+            self.speedX = 5
+        if keystate[pygame.K_w]:
+            self.speedY = -5
+        if keystate[pygame.K_s]:
+            self.speedY = 5
+        self.rect.x += self.speedX
+        self.rect.y += self.speedY
+        if self.rect.right >= constantes.LARGEUR:
+            self.rect.right = constantes.LARGEUR
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.top < 0:
+            self.rect.top = 0
+        if self.rect.bottom > constantes.HAUTEUR:
+            self.rect.bottom = constantes.HAUTEUR
 
     def attack(self):
         """
@@ -127,13 +150,21 @@ class Ennemi(Personnage):
     def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
         super().__init__(name, life, equipments, image, position)
 
-        def move(self):
-            raise NotImplementedError
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.Surface((20, 20))
+            self.image.fill((255, 0, 0))
+            self.rect = self.image.get_rect()
+            self.rect.x = random.randrange(constantes.LARGEUR - self.rect.width)
+            self.rect.y = random.randrange(-100, -40)
+            self.speedy = random.randrange(1, 8)
+            self.speedx = random.randrange(-3, 3)
 
-        def attack(self):
-            raise NotImplementedError
-
-            
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
+        def update(self):
+            self.rect.y += self.speedy
+            self.rect.x += self.speedx
+            if self.rect.top > constantes.HAUTEUR + 30 or self.rect.left < -25 or self.rect.right > LARGEUR + 20:
+                self.rect.x = random.randrange(constantes.LARGEUR - self.rect.width)
+                self.rect.y = random.randrange(-100, -40)
+                self.speedy = random.randrange(1, 8)
+                self.speedx = random.randrange(-3, 3)

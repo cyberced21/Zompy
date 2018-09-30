@@ -1,9 +1,11 @@
 import pygame
 import random
 import os
+from .. import model
+import constantes
 
 pygame.init()
-fenetre = pygame.display.set_mode((640,480))
+fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
 fond = pygame.image.load("background.jpg").convert()
 fenetre.blit(fond, (0, 0))
 
