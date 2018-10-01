@@ -2,12 +2,14 @@
 # Fichier contenant toutes les constantes du jeu #
 ##################################################
 
+import os
+
 LARGEUR = 800
-Hauteur = 600
+HAUTEUR = 600
 FPS = 60
 
 # Chemin du repertoire du jeu
-repertoire_jeu = os.path.dirname(__file__)
+repertoire_jeu = os.path.join(os.path.dirname(__file__), os.pardir)
 
 # Chemin du repertoire des images
-repertoire_images = ps.path.join(repertoire_jeu, "image")
+repertoire_images = os.path.join(repertoire_jeu, "image")

@@ -2,9 +2,11 @@
 Classe representant un Personnage dans le jeu Zompy
 """
 
+import os
 import pygame
 import random
-from constantes import *
+from . import constantes
+from . import equipments
 
 class Personnage(pygame.sprite.Sprite):
     """
@@ -29,40 +31,14 @@ class Personnage(pygame.sprite.Sprite):
         self._name = name
         self._life = life
         self._equipments = equipments
-        self.image = image
+        self.image = pygame.image.load(os.path.join(constantes.repertoire_images, "p1_jump.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self._position = position
         self.speedX = 0
         self.speedY = 0
 
     def update(self):
-        self.speedx = 0
-        self.speedy = 0
-        keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_a]:
-            self.speedX = -5
-        if keystate[pygame.K_d]:
-            self.speedX = 5
-        if keystate[pygame.K_w]:
-            self.speedY = -5
-        if keystate[pygame.K_s]:
-            self.speedY = 5
-        self.rect.x += self.speedX
-        self.rect.y += self.speedY
-        if self.rect.right >= constantes.LARGEUR:
-            self.rect.right = constantes.LARGEUR
-        if self.rect.left < 0:
-            self.rect.left = 0
-        if self.rect.top < 0:
-            self.rect.top = 0
-        if self.rect.bottom > constantes.HAUTEUR:
-            self.rect.bottom = constantes.HAUTEUR
-
-    def attack(self):
-        """
-        Methode abstraite qui fait attaquer le personnage
-        """
-        raise NotImplementedError
+        pass
 
     @property
     def equipment(self):
@@ -127,15 +103,40 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0)):
         super().__init__(name, life, equipments, image, position)
+        self.rect.centerx = constantes.LARGEUR / 2
+        self.rect.bottom = constantes.HAUTEUR - 50
 
-    def move(self):
-        raise NotImplementedError
+    def update(self):
+        self.speedX = 0
+        self.speedY = 0
+        keystate = pygame.key.get_pressed()
+        if keystate[pygame.K_a]:
+            self.speedX = -5
+        if keystate[pygame.K_d]:
+            self.speedX = 5
+        if keystate[pygame.K_w]:
+            self.speedY = -5
+        if keystate[pygame.K_s]:
+            self.speedY = 5
+        self.rect.x += self.speedX
+        self.rect.y += self.speedY
+        if self.rect.right >= constantes.LARGEUR:
+            self.rect.right = constantes.LARGEUR
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.top < 0:
+            self.rect.top = 0
+        if self.rect.bottom > constantes.HAUTEUR:
+            self.rect.bottom = constantes.HAUTEUR
 
-    def attack(self):
-        raise NotImplementedError
-
+    def shoot(self):
+        """
+        Cree une balle et la retourne
+        """
+        balle = equipments.Bullet(self.rect.centerx, self.rect.top)
+        return balle
 
 
 """
@@ -147,24 +148,24 @@ class Ennemi(Personnage):
     Classe Ennemi heritant de Personnage
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image=Image(), position=(0, 0)):
+    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0)):
         super().__init__(name, life, equipments, image, position)
 
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image = pygame.Surface((20, 20))
-            self.image.fill((255, 0, 0))
-            self.rect = self.image.get_rect()
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((20, 20))
+        self.image.fill((255, 0, 0))
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(constantes.LARGEUR - self.rect.width)
+        self.rect.y = random.randrange(-100, -40)
+        self.speedy = random.randrange(1, 8)
+        self.speedx = random.randrange(-3, 3)
+
+    def update(self):
+        self.rect.y += self.speedy
+        self.rect.x += self.speedx
+        if self.rect.top > constantes.HAUTEUR + 30 or self.rect.left < -25 or self.rect.right > constantes.LARGEUR + 20:
             self.rect.x = random.randrange(constantes.LARGEUR - self.rect.width)
             self.rect.y = random.randrange(-100, -40)
             self.speedy = random.randrange(1, 8)
             self.speedx = random.randrange(-3, 3)
-
-        def update(self):
-            self.rect.y += self.speedy
-            self.rect.x += self.speedx
-            if self.rect.top > constantes.HAUTEUR + 30 or self.rect.left < -25 or self.rect.right > LARGEUR + 20:
-                self.rect.x = random.randrange(constantes.LARGEUR - self.rect.width)
-                self.rect.y = random.randrange(-100, -40)
-                self.speedy = random.randrange(1, 8)
-                self.speedx = random.randrange(-3, 3)
