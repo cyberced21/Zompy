@@ -1,7 +1,7 @@
 # import pygame
 import pygame
 
-img = pygame.image.load("image\zombie.jpg")
+img = pygame.image.load("image\pixel_space.png")
 img = pygame.transform.scale(img, (800, 600))
 
 # initialize game engine
@@ -14,14 +14,17 @@ black = (0,0,0)
 white = (255,255,255)
 red = (200,0,0)
 green = (0,200,0)
+blue = (0,0,255)
 
 bright_red = (255,0,0)
 bright_green = (0,255,0)
+bright_blue = (30,144,255)
+
 
 animation_increment=10
 clock_tick_rate=20
 
-son = pygame.mixer.Sound("Damned.wav")
+son = pygame.mixer.Sound("pixel-adenture.wav")
 
 # Open a window
 size = (window_width, window_height)
@@ -30,8 +33,9 @@ screen = pygame.display.set_mode(size)
 # Set title to the window
 pygame.display.set_caption("ZompyMenu")
 
+
 def text_objects(text, font):
-    textSurface = font.render(text, True, black)
+    textSurface = font.render(text, True, white)
     return textSurface, textSurface.get_rect()
 
 def button(msg,x,y,w,h,ic,ac,action=None):
@@ -80,8 +84,15 @@ def game_intro():
                 dead = True
 
         screen.blit(background_image, [0, 0])
-        
+
+        #Texte du menu
+        largeText = pygame.font.Font('freesansbold.ttf',115)
+        TextSurf, TextRect = text_objects("SpacePy", largeText)
+        TextRect.center = ((window_width/2),(window_height/2))
+        screen.blit(TextSurf, TextRect)
+
         button("GO!",150,450,100,50,green,bright_green,game_loop)
+        button("Score",350,450,100,50,blue,bright_blue,game_score)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
 
         pygame.display.flip()
@@ -90,6 +101,10 @@ def game_intro():
 def game_loop():
     
     print("Hello world")
+
+def game_score():
+    
+    print("Score de joueur")
 
 def quitgame():
     pygame.quit()
