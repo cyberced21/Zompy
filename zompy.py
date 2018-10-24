@@ -1,6 +1,7 @@
 import pygame
 from model import constantes
 from model import personnages
+from model import niveau
 
 #Initialisation
 pygame.init()
@@ -13,10 +14,12 @@ ennemis = pygame.sprite.Group()
 spriteGroup = pygame.sprite.Group()
 balles = pygame.sprite.Group()
 joueur = personnages.Hero()
+niveau1 = niveau.Niveau(8)
+niveau2 = niveau.Niveau(25)
+niveau2.start()
 for i in range(8):
-    e = personnages.Ennemi()
-    spriteGroup.add(e)
-    ennemis.add(e)
+    spriteGroup.add(niveau2.get_listeEnnemis())
+    ennemis.add(niveau2.get_listeEnnemis())
 spriteGroup.add(joueur)
 
 # Fonction a integrer a la classe du Jeu
