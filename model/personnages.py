@@ -13,7 +13,7 @@ class Personnage(pygame.sprite.Sprite):
     Attributs:
        int: life
        Equipment[]: equipment
-       Image : image  
+       Image : image
        tuple : position
        String : name
     Methodes:
@@ -31,7 +31,7 @@ class Personnage(pygame.sprite.Sprite):
         self._name = name
         self._life = life
         self._equipments = equipments
-        self.image = pygame.image.load(os.path.join(constantes.repertoire_images, "p1_jump.png")).convert_alpha()
+        self.image = pygame.image.load(os.path.join(constantes.repertoire_images, "ship.png")).convert_alpha()
         self.rect = self.image.get_rect()
         self._position = position
         self.speedX = 0
@@ -92,7 +92,7 @@ class Personnage(pygame.sprite.Sprite):
     def position(self, position):
         self._position = position
 
-    
+
 
 """
 Classe representant un hero du jeu Zompy
@@ -107,11 +107,17 @@ class Hero(Personnage):
         super().__init__(name, life, equipments, image, position)
         self.rect.centerx = constantes.LARGEUR / 2
         self.rect.bottom = constantes.HAUTEUR - 50
+        self.rot = 0
 
     def update(self):
+        self.rotSpeed = 0
         self.speedX = 0
         self.speedY = 0
         keystate = pygame.key.get_pressed()
+        if keystate[pygame.K_q]:
+            self.rotSpeed = -constantes.VITESSE_ROTATION
+        if keystate[pygame.K_e]:
+            self.rotSpeed = constantes.VITESSE_ROTATION
         if keystate[pygame.K_a]:
             self.speedX = -5
         if keystate[pygame.K_d]:

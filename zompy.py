@@ -1,4 +1,5 @@
 import pygame
+import os
 from model import constantes
 from model import personnages
 from model import niveau
@@ -7,6 +8,7 @@ from model import niveau
 pygame.init()
 pygame.mixer.init() #Si on veux ajouter du son
 fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
+fond = pygame.image.load(os.path.join(constantes.repertoire_images, "space.png")).convert()
 clock = pygame.time.Clock()
 score = 0
 
@@ -65,7 +67,7 @@ while running:
         running = False
 
     # Dessiner
-    fenetre.fill((56, 26, 164))
+    fenetre.blit(fond, [0, 0])
     spriteGroup.draw(fenetre)
     drawScore(fenetre, str(score))
 
