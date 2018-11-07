@@ -7,7 +7,7 @@ pygame.init()
 fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
 clock_tick_rate=20
 
-son = pygame.mixer.Sound("pixel-adenture.wav")
+son = pygame.mixer.Sound(constantes.sonMenuChemin)
 
 
 def text_objects(text, font):
