@@ -31,10 +31,20 @@ class Partie():
         text_rect.midtop = (constantes.LARGEUR/2, 0)
         surf.blit(text_surface, text_rect)
 
+    # Inscris le compte a rebours avant le prochain niveau
+    def drawTime(self, surf, time):
+        font_name = pygame.font.match_font('arial')
+        font = pygame.font.Font(font_name, 24)
+        text_surface = font.render("Prochain niveau dans: " + str(10 - int(time)), True, (255, 0, 0))
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (constantes.LARGEUR-145, 0)
+        surf.blit(text_surface, text_rect)
+
     # Demarre une partie
     def jouer(self):
         niveauTermine = False
         nivActuel = 0
+        timer = 0
         # On demarre le premier niveau
         self.niveau = niveau.Niveau(self.listeNbEnnemis[nivActuel])
         self.niveau.start()
@@ -42,26 +52,23 @@ class Partie():
         self.spriteGroup.add(ennemis)
         self.ennemis.add(ennemis)
 
-        # On affecte l'evenement qui va se declencher quand le temps entre les niveaux sera ecouler
-        tempsecoulerEvent = pygame.USEREVENT + 1 # On met +1 pour qu'il n'y ait pas de conflits entre les evenements
-
         while(self.running):
             # Si le niveau actuel est termine, on demarre le niveau suivant
-            if(niveauTermine and pygame.event.get(tempsecoulerEvent)):
-                for event in pygame.event.get():
-                    if event == tempsecoulerEvent:
-                        nivActuel += 1
-                        # On retire les ennemis du niveau precedant des spriteGroup
-                        self.spriteGroup.remove(ennemis)
-                        self.ennemis.remove(ennemis)
-                        # On regenere le nouveau niveau
-                        self.niveau = niveau.Niveau(self.listeNbEnnemis[nivActuel])
-                        self.niveau.start()
-                        # On ajoute les nouveaux ennemis aux spriteGroups
-                        ennemis = self.niveau.get_listeEnnemis()
-                        self.spriteGroup.add(ennemis)
-                        self.ennemis.add(ennemis)
-                        niveauTermine = False
+            if(niveauTermine):
+                timer = (pygame.time.get_ticks() - timerstart) / 1000
+                if(timer >= constantes.interval_niveaux):
+                    nivActuel += 1
+                    # On retire les ennemis du niveau precedant des spriteGroup
+                    self.spriteGroup.remove(ennemis)
+                    self.ennemis.remove(ennemis)
+                    # On regenere le nouveau niveau
+                    self.niveau = niveau.Niveau(self.listeNbEnnemis[nivActuel])
+                    self.niveau.start()
+                    # On ajoute les nouveaux ennemis aux spriteGroups
+                    ennemis = self.niveau.get_listeEnnemis()
+                    self.spriteGroup.add(ennemis)
+                    self.ennemis.add(ennemis)
+                    niveauTermine = False
 
             # FPS
             self.clock.tick(constantes.FPS)
@@ -83,9 +90,10 @@ class Partie():
             # Si oui, on le regenere
             for hit in hits:
                 self.score += 1
+                # Verifie si le niveau est termine
                 if(len(self.ennemis) == 0):
-                    pygame.time.set_timer(tempsecoulerEvent, 10000)
                     niveauTermine = True
+                    timerstart = pygame.time.get_ticks()
 
             # Verifie si le joueur s'est fait toucher
             hits = pygame.sprite.spritecollide(self.joueur, self.ennemis, False)
@@ -96,6 +104,8 @@ class Partie():
             self.fenetre.fill((56, 26, 164))
             self.spriteGroup.draw(self.fenetre)
             self.drawScore(self.fenetre, str(self.score))
+            if(niveauTermine):
+                self.drawTime(self.fenetre, timer)
 
             # A faire apres avoir tout dessiner
             pygame.display.flip()

@@ -33,6 +33,9 @@ bright_red = (255,0,0)
 bright_green = (0,255,0)
 bright_blue = (30,144,255)
 
+# Intervale entre les niveaux(secondes)
+interval_niveaux = 10
+
 # Son
 sonMenuChemin = os.path.join(repertoire_son, "pixel-adenture.wav")
 #sonMenu = pygame.mixer.Sound(sonMenuChemin)
