@@ -62,26 +62,32 @@ class DefaultPistol(Weapon):
     def __init__(self, name="defaultEquipment", timelapse=100, image="", firePower=100):
         super().__init__(name, timelapse, image, firePower)
 
-    def attack(self):
-        raise NotImplementedError
+    def attack(self,centerx,topy):
+		# generates the bullet from the center x and the top y
+        return Bullet(centerx,topy,3,10)
 
 
-class FlameThrower(Weapon):
+
+class Canon(Weapon):
     """
-	Classe representant un lance flame utilises par les personnages
+	Classe representant un Canon utilises par les personnages
 	"""
 
-    def __init__(self, name="defaultEquipment", timelapse=100, image="", firePower=100):
+    def __init__(self, name="Canon", timelapse=100, image="", firePower=100):
         super().__init__(name, timelapse, image, firePower)
 
-    def attack(self):
-        raise NotImplementedError
+    def attack(self,centerx,topy):
+        # generates the bullet from the center x and the top y
+        return Bullet(centerx,topy,15,15)
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y,sizex,sizey):
+        """
+		Takes the spawn location of the bullet as x and y and its size as sizex and sizey
+		"""
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((3, 10))
+        self.image = pygame.Surface((sizex, sizey))
         self.image.fill((255, 255, 255))
         self.rect = self.image.get_rect()
         self.rect.bottom = y

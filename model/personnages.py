@@ -13,7 +13,7 @@ class Personnage(pygame.sprite.Sprite):
     Attributs:
        int: life
        Equipment[]: equipment
-       Image : image  
+       Image : image
        tuple : position
        String : name
     Methodes:
@@ -60,6 +60,15 @@ class Personnage(pygame.sprite.Sprite):
     def removeEquipment(self):
         self._equipments.pop()
 
+
+    @property
+    def current_equipment(self):
+        return self.current_equipment
+
+    @current_equipment.setter
+    def current_equipement(self):
+        self.current_equipment=self._equipments.pop()
+
     @property
     def name(self):
         return self._name
@@ -92,7 +101,7 @@ class Personnage(pygame.sprite.Sprite):
     def position(self, position):
         self._position = position
 
-    
+
 
 """
 Classe representant un hero du jeu Zompy
@@ -103,10 +112,11 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0)):
+    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0),money=0):
         super().__init__(name, life, equipments, image, position)
         self.rect.centerx = constantes.LARGEUR / 2
         self.rect.bottom = constantes.HAUTEUR - 50
+        self._money=money
 
     def update(self):
         self.speedX = 0
@@ -133,11 +143,19 @@ class Hero(Personnage):
 
     def shoot(self):
         """
-        Cree une balle et la retourne
+        tire avec l'arme
         """
-        balle = equipments.Bullet(self.rect.centerx, self.rect.top)
-        return balle
 
+        # prend l'equipement courament utiliser et tire avec
+        return self.current_equipment.attack(self.rect.centerx,self.rect.top)
+
+    def receiveMoney(self,money):
+        self._money+=money
+        return self.money
+
+    def spendMoney(self,money):
+        self._money-=money
+        return self._money
 
 """
 Classe representant un ennemi du jeu Zompy

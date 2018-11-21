@@ -3,6 +3,7 @@ from model import constantes
 from model import personnages
 from model import niveau
 from model import menu
+from model import equipments
 
 class Zompy():
     def __init__(self):
@@ -16,7 +17,8 @@ class Zompy():
         self.ennemis = pygame.sprite.Group()
         self.spriteGroup = pygame.sprite.Group()
         self.balles = pygame.sprite.Group()
-        self.joueur = personnages.Hero()
+
+        self.joueur = personnages.Hero("cedrik",100,[equipments.Canon()],"",(0,0),0)
         self.niveau1 = niveau.Niveau(8)
         self.niveau2 = niveau.Niveau(25)
         self.niveau2.start()
