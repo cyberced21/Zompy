@@ -2,6 +2,7 @@ import pygame
 from . import constantes
 from . import personnages
 from . import niveau
+from . import equipments
 
 class Partie():
     """
@@ -18,7 +19,8 @@ class Partie():
         self.ennemis = pygame.sprite.Group()
         self.spriteGroup = pygame.sprite.Group()
         self.balles = pygame.sprite.Group()
-        self.joueur = personnages.Hero()
+        self.joueur = personnages.Hero("cedrik",100,[equipments.Canon()],"",(0,0),0)
+        self.joueur.setCurrentEquipment()
         self.listeNbEnnemis = [5, 9, 12, 15, 19, 22, 25, 27, 30, 35]
         self.spriteGroup.add(self.joueur)
 

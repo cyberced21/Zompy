@@ -36,6 +36,7 @@ class Personnage(pygame.sprite.Sprite):
         self._position = position
         self.speedX = 0
         self.speedY = 0
+        self.current_equipment=""
 
     def update(self):
         pass
@@ -60,13 +61,10 @@ class Personnage(pygame.sprite.Sprite):
     def removeEquipment(self):
         self._equipments.pop()
 
-
-    @property
-    def current_equipment(self):
+    def getCurrentEquipment(self):
         return self.current_equipment
 
-    @current_equipment.setter
-    def current_equipement(self):
+    def setCurrentEquipment(self):
         self.current_equipment=self._equipments.pop()
 
     @property
@@ -147,7 +145,7 @@ class Hero(Personnage):
         """
 
         # prend l'equipement courament utiliser et tire avec
-        return self.current_equipment.attack(self.rect.centerx,self.rect.top)
+        return self.getCurrentEquipment().attack(self.rect.centerx,self.rect.top)
 
     def receiveMoney(self,money):
         self._money+=money
