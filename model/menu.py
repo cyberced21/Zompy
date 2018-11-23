@@ -87,8 +87,8 @@ class Menu():
 
             if(self.bJouer.draw() == "jouer"):
                 son.stop()
-                return "jouer"
                 dead = True
+                return "jouer"
             if(self.bScore.draw() == "score"):
                 son.stop()
                 dead = True

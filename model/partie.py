@@ -19,8 +19,7 @@ class Partie():
         self.ennemis = pygame.sprite.Group()
         self.spriteGroup = pygame.sprite.Group()
         self.balles = pygame.sprite.Group()
-        self.joueur = personnages.Hero("cedrik",100,[equipments.Canon()],"",(0,0),0)
-        self.joueur.setCurrentEquipment()
+        self.joueur = personnages.Hero("cedrik",100,[equipments.Canon(),equipments.DefaultPistol()],"",(0,0),0)
         self.listeNbEnnemis = [5, 9, 12, 15, 19, 22, 25, 27, 30, 35]
         self.spriteGroup.add(self.joueur)
 
@@ -31,6 +30,14 @@ class Partie():
         text_surface = font.render("Score: " + score, True, (255, 0, 0))
         text_rect = text_surface.get_rect()
         text_rect.midtop = (constantes.LARGEUR/2, 0)
+        surf.blit(text_surface, text_rect)
+
+    def drawCurrentWeapon(self,surf,equipment_name):
+        font_name = pygame.font.match_font('arial')
+        font = pygame.font.Font(font_name, 24)
+        text_surface = font.render("Current weapon : " + equipment_name, True, (255, 0, 0))
+        text_rect = text_surface.get_rect()
+        text_rect.midbottom = (constantes.LARGEUR/1.25, constantes.HAUTEUR-30)
         surf.blit(text_surface, text_rect)
 
     # Inscris le compte a rebours avant le prochain niveau
@@ -78,11 +85,14 @@ class Partie():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                    pygame.quit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         balle = self.joueur.shoot()
                         self.spriteGroup.add(balle)
                         self.balles.add(balle)
+                    if event.key == pygame.K_q:
+                        self.joueur.setCurrentEquipment()
 
             # Update
             self.spriteGroup.update()
@@ -105,6 +115,7 @@ class Partie():
             # Dessiner
             self.fenetre.fill((56, 26, 164))
             self.spriteGroup.draw(self.fenetre)
+            self.drawCurrentWeapon(self.fenetre,self.joueur.getCurrentEquipment().name)
             self.drawScore(self.fenetre, str(self.score))
             if(niveauTermine):
                 self.drawTime(self.fenetre, timer)
