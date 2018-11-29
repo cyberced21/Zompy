@@ -22,6 +22,21 @@ class Partie():
         self.listeNbEnnemis = [5, 9, 12, 15, 19, 22, 25, 27, 30, 35]
         self.spriteGroup.add(self.joueur)
 
+    def __init__(self, imagePerso):
+        #Initialisation
+        pygame.init()
+        pygame.mixer.init() #Si on veux ajouter du son
+        self.fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
+        self.clock = pygame.time.Clock()
+        self.score = 0
+        self.running = True
+        self.ennemis = pygame.sprite.Group()
+        self.spriteGroup = pygame.sprite.Group()
+        self.balles = pygame.sprite.Group()
+        self.joueur = personnages.Hero(imagePerso)
+        self.listeNbEnnemis = [5, 9, 12, 15, 19, 22, 25, 27, 30, 35]
+        self.spriteGroup.add(self.joueur)
+
     # Inscris le score actuel
     def drawScore(self, surf, score):
         font_name = pygame.font.match_font('arial')

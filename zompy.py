@@ -10,7 +10,7 @@ from model.partie import Partie
 #               Game loop               3
 #########################################
 
-imagePerso = ""
+imagePerso = constantes.perso1
 menu = menu.Menu()
 selectMenu = selectionPersonnage.SelectionPersonnage()
 action = ""
@@ -36,7 +36,7 @@ while True:
         elif(action == "perso3"):
             imagePerso = constantes.perso3
 
-        partie = Partie()
+        partie = Partie(imagePerso)
         partie.jouer()
 
 pygame.quit()

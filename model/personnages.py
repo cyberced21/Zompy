@@ -31,11 +31,12 @@ class Personnage(pygame.sprite.Sprite):
         self._name = name
         self._life = life
         self._equipments = equipments
-        self.image = pygame.image.load(os.path.join(constantes.repertoire_images, "p1_jump.png")).convert_alpha()
+        self.image = image
         self.rect = self.image.get_rect()
         self._position = position
         self.speedX = 0
         self.speedY = 0
+        
 
     def update(self):
         pass
@@ -104,6 +105,15 @@ class Hero(Personnage):
     """
 
     def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0)):
+        super().__init__(name, life, equipments, image, position)
+        self.rect.centerx = constantes.LARGEUR / 2
+        self.rect.bottom = constantes.HAUTEUR - 50
+
+    def __init__(self, image):
+        position=(0, 0)
+        equipments=[]
+        life=100
+        name="Default"
         super().__init__(name, life, equipments, image, position)
         self.rect.centerx = constantes.LARGEUR / 2
         self.rect.bottom = constantes.HAUTEUR - 50
