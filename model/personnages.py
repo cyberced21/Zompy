@@ -13,7 +13,7 @@ class Personnage(pygame.sprite.Sprite):
     Attributs:
        int: life
        Equipment[]: equipment
-       Image : image  
+       Image : image
        tuple : position
        String : name
     Methodes:
@@ -30,6 +30,7 @@ class Personnage(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self._name = name
         self._life = life
+        self.current_equipment=equipments.pop()
         self._equipments = equipments
         self.image = image
         self.rect = self.image.get_rect()
@@ -60,6 +61,13 @@ class Personnage(pygame.sprite.Sprite):
 
     def removeEquipment(self):
         self._equipments.pop()
+
+    def getCurrentEquipment(self):
+        return self.current_equipment
+
+    def setCurrentEquipment(self):
+        self._equipments.insert(0,self.current_equipment)
+        self.current_equipment=self._equipments.pop()
 
     @property
     def name(self):
@@ -93,7 +101,7 @@ class Personnage(pygame.sprite.Sprite):
     def position(self, position):
         self._position = position
 
-    
+
 
 """
 Classe representant un hero du jeu Zompy
@@ -104,10 +112,11 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0)):
+    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0),money=0):
         super().__init__(name, life, equipments, image, position)
         self.rect.centerx = constantes.LARGEUR / 2
         self.rect.bottom = constantes.HAUTEUR - 50
+        self._money=money
 
     def __init__(self, image):
         position=(0, 0)
@@ -143,11 +152,19 @@ class Hero(Personnage):
 
     def shoot(self):
         """
-        Cree une balle et la retourne
+        tire avec l'arme
         """
-        balle = equipments.Bullet(self.rect.centerx, self.rect.top)
-        return balle
 
+        # prend l'equipement courament utiliser et tire avec
+        return self.getCurrentEquipment().attack(self.rect.centerx,self.rect.top)
+
+    def receiveMoney(self,money):
+        self._money+=money
+        return self.money
+
+    def spendMoney(self,money):
+        self._money-=money
+        return self._money
 
 """
 Classe representant un ennemi du jeu Zompy

@@ -85,7 +85,7 @@ class Menu():
             if(self.bJouer.draw() == "jouer"):
                 dead = True
                 return "jouer"
-            
+
             if(self.bScore.draw() == "score"):
                 dead = True
                 return "score"
