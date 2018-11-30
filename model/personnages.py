@@ -112,20 +112,11 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0),money=0):
+    def __init__(self, name="Default", life=100, equipments=[equipments.Canon(),equipments.DefaultPistol()], image=constantes.perso1, position=(0, 0),money=0):
         super().__init__(name, life, equipments, image, position)
         self.rect.centerx = constantes.LARGEUR / 2
         self.rect.bottom = constantes.HAUTEUR - 50
         self._money=money
-
-    def __init__(self, image):
-        position=(0, 0)
-        equipments=[]
-        life=100
-        name="Default"
-        super().__init__(name, life, equipments, image, position)
-        self.rect.centerx = constantes.LARGEUR / 2
-        self.rect.bottom = constantes.HAUTEUR - 50
 
     def update(self):
         self.speedX = 0
