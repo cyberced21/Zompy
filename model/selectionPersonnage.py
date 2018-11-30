@@ -6,7 +6,6 @@ pygame.init()
 fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
 clock_tick_rate=20
 
-son = pygame.mixer.Sound(constantes.sonMenuChemin)
 
 imagePerso = ""
 
@@ -70,11 +69,12 @@ class SelectionPersonnage():
         self.bPerso3 = Button("Selectionner",600,350,150,50,constantes.blue,constantes.bright_blue,"perso3")
 
     def run(self):
-        son.play()
+        
         while(self.dead==False):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.dead = True
+                    pygame.quit()
+                    quit()
 
             fenetre.blit(self.background_image, [0, 0])
             fenetre.blit(constantes.perso1,(85,250))
@@ -89,19 +89,15 @@ class SelectionPersonnage():
             fenetre.blit(TextSurf, TextRect)
 
             if(self.bPerso1.draw() == "perso1"):
-                son.stop()
                 dead = True
-                #imagePerso = constantes.perso1
                 return "perso1"
+            
             if(self.bPerso2.draw() == "perso2"):
-                son.stop()
                 dead = True
-                #imagePerso = constantes.perso2
                 return "perso2"
+            
             if(self.bPerso3.draw() == "perso3"):
-                son.stop()
                 dead = True
-                #imagePerso = constantes.perso3
                 return "perso3"
 
             pygame.display.flip()

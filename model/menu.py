@@ -3,11 +3,8 @@ from . import constantes
 
 pygame.init()
 
-
 fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
 clock_tick_rate=20
-
-son = pygame.mixer.Sound(constantes.sonMenuChemin)
 
 
 def text_objects(text, font):
@@ -63,7 +60,6 @@ class Menu():
     def __init__(self):
 
         self.dead=False
-        #fenetre = pygame.display.set_mode((constantes.LARGEUR, constantes.HAUTEUR))
         self.clock = pygame.time.Clock()
         self.background_image = constantes.fondMenu
         self.bJouer = Button("GO!",150,450,100,50,constantes.green,constantes.bright_green,"jouer")
@@ -71,30 +67,30 @@ class Menu():
         self.bQuitter = Button("Quit",550,450,100,50,constantes.red,constantes.bright_red,"quitter")
 
     def run(self):
-        son.play()
+        
         while(self.dead==False):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.dead = True
+                    pygame.quit()
+                    quit()
 
             fenetre.blit(self.background_image, [0, 0])
 
             #Texte du menu
             largeText = pygame.font.Font('freesansbold.ttf',115)
-            TextSurf, TextRect = text_objects("SpacePy", largeText)
+            TextSurf, TextRect = text_objects("ZomPy", largeText)
             TextRect.center = ((constantes.LARGEUR/2),(constantes.HAUTEUR/2))
             fenetre.blit(TextSurf, TextRect)
 
             if(self.bJouer.draw() == "jouer"):
-                son.stop()
-                return "jouer"
                 dead = True
+                return "jouer"
+            
             if(self.bScore.draw() == "score"):
-                son.stop()
                 dead = True
                 return "score"
+            
             if(self.bQuitter.draw() == "quitter"):
-                son.stop()
                 dead = True
                 return "quitter"
 

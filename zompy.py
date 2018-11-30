@@ -10,19 +10,23 @@ from model.partie import Partie
 #               Game loop               3
 #########################################
 
+son = pygame.mixer.Sound(constantes.sonMenuChemin)
 imagePerso = constantes.perso1
 menu = menu.Menu()
 selectMenu = selectionPersonnage.SelectionPersonnage()
 action = ""
 clock = pygame.time.Clock()
 while True:
+    son.play()
     clock.tick(constantes.FPS)
     menu.run()
     action = menu.run()
 
     if(action == "quitter"):
+        son.stop()
         pygame.quit()
     elif(action == "score"):
+        son.stop()
         menu.run()
     elif(action == "jouer"):
         action = selectMenu.run()
@@ -36,6 +40,7 @@ while True:
         elif(action == "perso3"):
             imagePerso = constantes.perso3
 
+        son.stop()
         partie = Partie(imagePerso)
         partie.jouer()
 
