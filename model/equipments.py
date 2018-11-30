@@ -17,7 +17,6 @@ class Equipment():
 
     @property
     def name(self):
-        print("fndui")
         return self._name
 
     @name.setter
