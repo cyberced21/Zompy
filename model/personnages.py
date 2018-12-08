@@ -30,13 +30,14 @@ class Personnage(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self._name = name
         self._life = life
+        self.current_equipment=equipments.pop()
         self._equipments = equipments
-        self.image = pygame.image.load(os.path.join(constantes.repertoire_images, "p1_jump.png")).convert_alpha()
+        self.image = image
         self.rect = self.image.get_rect()
         self._position = position
         self.speedX = 0
         self.speedY = 0
-        self.current_equipment=""
+        
 
     def update(self):
         pass
@@ -65,6 +66,7 @@ class Personnage(pygame.sprite.Sprite):
         return self.current_equipment
 
     def setCurrentEquipment(self):
+        self._equipments.insert(0,self.current_equipment)
         self.current_equipment=self._equipments.pop()
 
     @property
@@ -110,7 +112,7 @@ class Hero(Personnage):
     Classe Hero heritant de Personnage
     """
 
-    def __init__(self, name="Default", life=100, equipments=[], image="", position=(0, 0),money=0):
+    def __init__(self, name="Default", life=100, equipments=[equipments.Canon(),equipments.DefaultPistol()], image=constantes.perso1, position=(0, 0),money=0):
         super().__init__(name, life, equipments, image, position)
         self.rect.centerx = constantes.LARGEUR / 2
         self.rect.bottom = constantes.HAUTEUR - 50

@@ -17,6 +17,15 @@ repertoire_images = os.path.join(repertoire_jeu, "image")
 # Chemin du repertoire des sons
 repertoire_son = os.path.join(repertoire_jeu, "son")
 
+# Image des personnage
+perso1Chemin = os.path.join(repertoire_images, "perso1.jpg")
+perso1 = pygame.transform.scale(pygame.image.load(perso1Chemin),(67,94))
+perso2Chemin = os.path.join(repertoire_images, "perso2.jpg")
+perso2 = pygame.transform.scale(pygame.image.load(perso2Chemin),(67,94))
+perso3Chemin = os.path.join(repertoire_images, "perso3.jpg")
+perso3 = pygame.transform.scale(pygame.image.load(perso3Chemin),(67,94))
+
+
 # Mise en place de l'image du menu
 fondMenuChemin = os.path.join(repertoire_images, "pixel_space.png")
 fondMenu = pygame.image.load(fondMenuChemin)

@@ -17,7 +17,6 @@ class Equipment():
 
     @property
     def name(self):
-        print("fndui")
         return self._name
 
     @name.setter
@@ -59,7 +58,7 @@ class DefaultPistol(Weapon):
 	Classe representant le pistolet par defaut pour les personnages
 	"""
 
-    def __init__(self, name="defaultEquipment", timelapse=100, image="", firePower=100):
+    def __init__(self, name="Default Pistol", timelapse=100, image="", firePower=100):
         super().__init__(name, timelapse, image, firePower)
 
     def attack(self,centerx,topy):
@@ -101,7 +100,7 @@ class Canon(Weapon):
         12
         """
         # generates the bullet from the center x and the top y
-        return Bullet(centerx,topy,15,15)
+        return Bullet(centerx,topy,50,50)
 
 
 class Bullet(pygame.sprite.Sprite):
