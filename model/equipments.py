@@ -63,9 +63,20 @@ class DefaultPistol(Weapon):
         super().__init__(name, timelapse, image, firePower)
 
     def attack(self,centerx,topy):
-		# generates the bullet from the center x and the top y
-        return Bullet(centerx,topy,3,10)
-
+        """
+        Tests par Sebastien
+        Il suffit d'executer ce fichier seul pour executer les tests avec Doctest
+        >>> p = DefaultPistol()
+        >>> type(p.attack(20, 20)) is Bullet
+        True
+        >>> b = p.attack(20, 5)
+        >>> print(b.rect.bottom)
+        5
+        >>> print(b.rect.centerx)
+        20
+        """
+        # generates the bullet from the center x and the top y
+        return Bullet(centerx, topy, 3, 10)
 
 
 class Canon(Weapon):
@@ -77,6 +88,18 @@ class Canon(Weapon):
         super().__init__(name, timelapse, image, firePower)
 
     def attack(self,centerx,topy):
+        """
+        Tests par Sebastien
+        Il suffit d'executer ce fichier seul pour executer les tests avec Doctest
+        >>> p = DefaultPistol()
+        >>> type(p.attack(20, 20)) is Bullet
+        True
+        >>> b = p.attack(12, 7)
+        >>> print(b.rect.bottom)
+        7
+        >>> print(b.rect.centerx)
+        12
+        """
         # generates the bullet from the center x and the top y
         return Bullet(centerx,topy,15,15)
 
@@ -94,8 +117,12 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.centerx = x
         self.speedy = -10
 
-    def update(self):
+    def update(self):        
         self.rect.y += self.speedy
         # On detruit si la balle est hors de la fenetre
         if self.rect.bottom < 0:
             self.kill()
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
