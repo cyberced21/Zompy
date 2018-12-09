@@ -111,6 +111,7 @@ class Partie():
             hits = pygame.sprite.spritecollide(self.joueur, self.ennemis, False)
             if hits:
                 self.running = False
+                return self.score
 
             # Dessiner
             self.fenetre.fill((56, 26, 164))
