@@ -1,17 +1,19 @@
-import equipments
+from . import equipments
+import pygame
+import random
+from . import constantes
 
-class Magasin():
-    """
-    Reprensente un magasin, qui va contenir les crate qui permettent d'acheter des choses
-    """
-    def __init__(self,crate_list):
-        self._crate_list = crate_list
-
-class Crate():
+class Crate(pygame.sprite.Sprite):
     """
     Represents a crate object which contains an equipment and has a set price
     """
     def __init__(self,price,equipment):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((50, 50))
+        self.image.fill((215, 205, 145))
+        self.rect = self.image.get_rect()
+        self.rect.x = 500
+        self.rect.y = 300
         self._equipment = equipment
         self._price = price
 
@@ -32,8 +34,6 @@ class Crate():
         self._price = new_price
 
     def buyCrate(self,money):
-        if self._price <= money
+        if self._price <= money:
             return self._equipment
         raise ValueError("you dont have enough money")
-
-    

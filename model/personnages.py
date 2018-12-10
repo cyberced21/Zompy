@@ -37,7 +37,7 @@ class Personnage(pygame.sprite.Sprite):
         self._position = position
         self.speedX = 0
         self.speedY = 0
-        
+
 
     def update(self):
         pass
@@ -151,10 +151,13 @@ class Hero(Personnage):
 
     def receiveMoney(self,money):
         self._money+=money
-        return self.money
+        return self._money
 
     def spendMoney(self,money):
         self._money-=money
+        return self._money
+
+    def getMoney(self):
         return self._money
 
 """

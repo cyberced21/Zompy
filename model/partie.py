@@ -3,6 +3,7 @@ from . import constantes
 from . import personnages
 from . import niveau
 from . import equipments
+from . import Magasin
 
 class Partie():
     """
@@ -18,8 +19,9 @@ class Partie():
         self.running = True
         self.ennemis = pygame.sprite.Group()
         self.spriteGroup = pygame.sprite.Group()
+        self.crates = pygame.sprite.Group()
         self.balles = pygame.sprite.Group()
-        self.joueur = personnages.Hero("cedrik",100,[equipments.Canon(),equipments.DefaultPistol()],imagePerso,(0,0),0)
+        self.joueur = personnages.Hero("cedrik",100,[equipments.DefaultPistol()],imagePerso,(0,0),0)
         self.listeNbEnnemis = [5, 9, 12, 15, 19, 22, 25, 27, 30, 35]
         self.spriteGroup.add(self.joueur)
 
@@ -38,6 +40,14 @@ class Partie():
         text_surface = font.render("Current weapon : " + equipment_name, True, (255, 0, 0))
         text_rect = text_surface.get_rect()
         text_rect.midbottom = (constantes.LARGEUR/1.25, constantes.HAUTEUR-30)
+        surf.blit(text_surface, text_rect)
+
+    def drawMoney(self,surf,current_money):
+        font_name = pygame.font.match_font('arial')
+        font = pygame.font.Font(font_name, 24)
+        text_surface = font.render("Money : " + current_money, True, (255, 0, 0))
+        text_rect = text_surface.get_rect()
+        text_rect.midbottom = (constantes.LARGEUR/2, constantes.HAUTEUR-30)
         surf.blit(text_surface, text_rect)
 
     # Inscris le compte a rebours avant le prochain niveau
@@ -62,9 +72,13 @@ class Partie():
         self.ennemis.add(ennemis)
 
         while(self.running):
+
             # Si le niveau actuel est termine, on demarre le niveau suivant
             if(niveauTermine):
                 timer = (pygame.time.get_ticks() - timerstart) / 1000
+                self.crates.add(Magasin.Crate(100,equipments.DefaultPistol()))
+                self.crates.update()
+                self.crates.draw(self.fenetre)
                 if(timer >= constantes.interval_niveaux):
                     nivActuel += 1
                     # On retire les ennemis du niveau precedant des spriteGroup
@@ -102,8 +116,10 @@ class Partie():
             # Si oui, on le regenere
             for hit in hits:
                 self.score += 1
+                self.joueur.receiveMoney(1)
                 # Verifie si le niveau est termine
                 if(len(self.ennemis) == 0):
+                    self.joueur.receiveMoney(10)
                     niveauTermine = True
                     timerstart = pygame.time.get_ticks()
 
@@ -117,6 +133,7 @@ class Partie():
             self.spriteGroup.draw(self.fenetre)
             self.drawCurrentWeapon(self.fenetre,self.joueur.getCurrentEquipment().name)
             self.drawScore(self.fenetre, str(self.score))
+            self.drawMoney(self.fenetre,str(self.joueur.getMoney()))
             if(niveauTermine):
                 self.drawTime(self.fenetre, timer)
 
