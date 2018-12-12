@@ -50,3 +50,7 @@ interval_niveaux = 10
 # Son
 sonMenuChemin = os.path.join(repertoire_son, "pixel-adenture.wav")
 #sonMenu = pygame.mixer.Sound(sonMenuChemin)
+
+#Chemin du repertoire du score
+repertoire_save = os.path.join(repertoire_jeu, "save")
+fichierScore = os.path.join(repertoire_jeu, "score.json")

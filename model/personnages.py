@@ -1,12 +1,18 @@
 """
 Classe representant un Personnage dans le jeu Zompy
 """
-
-import os
-import pygame
-import random
-from . import constantes
-from . import equipments
+if __name__ == "__main__" or __name__ == "personnages":
+    import os
+    import pygame
+    import random
+    import constantes
+    import equipments
+else:
+    import os
+    import pygame
+    import random
+    from . import constantes
+    from . import equipments
 
 class Personnage(pygame.sprite.Sprite):
     """

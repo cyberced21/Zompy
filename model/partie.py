@@ -1,3 +1,4 @@
+
 import pygame
 from . import constantes
 from . import personnages
@@ -140,6 +141,7 @@ class Partie():
             hits = pygame.sprite.spritecollide(self.joueur, self.ennemis, False)
             if hits:
                 self.running = False
+                return self.score
 
             # Dessiner
             self.fenetre.fill((25, 25, 25, 25))

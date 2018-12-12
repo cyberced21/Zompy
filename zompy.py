@@ -4,6 +4,7 @@ from model import personnages
 from model import niveau
 from model import menu
 from model import selectionPersonnage
+from model import score
 from model.partie import Partie
 
 #########################################
@@ -14,6 +15,7 @@ son = pygame.mixer.Sound(constantes.sonMenuChemin)
 imagePerso = constantes.perso1
 menu = menu.Menu()
 selectMenu = selectionPersonnage.SelectionPersonnage()
+score = score.Score()
 action = ""
 clock = pygame.time.Clock()
 while True:
@@ -26,6 +28,7 @@ while True:
         son.stop()
         pygame.quit()
     elif(action == "score"):
+        action = score.afficherScore()
         son.stop()
         menu.run()
     elif(action == "jouer"):
@@ -42,7 +45,8 @@ while True:
 
         son.stop()
         partie = Partie(imagePerso)
-        partie.jouer()
+        pointage = partie.jouer()
+        score.ajouterScore(pointage)
 
 pygame.quit()
 quit()
