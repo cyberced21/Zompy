@@ -1,7 +1,15 @@
-from . import equipments
-import pygame
-import random
-from . import constantes
+
+
+if __name__ == "__main__":
+    import equipments
+    import pygame
+    import random
+    import constantes
+else:
+    from . import equipments
+    from . import constantes
+    import random
+    import pygame
 
 class Crate(pygame.sprite.Sprite):
     """
@@ -19,6 +27,11 @@ class Crate(pygame.sprite.Sprite):
 
     @property
     def equipment(self):
+        """
+        >>> lol=Crate(12,equipments.DefaultPistol())
+        >>> lol.equipment.name
+        'Default Pistol'
+        """
         return self._equipment
 
     @equipment.setter
@@ -27,6 +40,11 @@ class Crate(pygame.sprite.Sprite):
 
     @property
     def price(self):
+        """
+        >>> lol=Crate(12,equipments.DefaultPistol())
+        >>> lol.price
+        12
+        """
         return self._price
 
     @price.setter
@@ -34,6 +52,23 @@ class Crate(pygame.sprite.Sprite):
         self._price = new_price
 
     def buyCrate(self,money):
+        """
+        >>> lol=Crate(12,equipments.DefaultPistol())
+        >>> buy_equip = lol.buyCrate(20)
+        >>> buy_equip.name
+        'Default Pistol'
+        >>> lol.buyCrate(5)
+        Traceback (most recent call last):
+            File "Magasin.py", line 52, in <module>
+                print(lol.buyCrate(5).name)
+            File "Magasin.py", line 47, in buyCrate
+            raise ValueError("you dont have enough money")
+        ValueError: you dont have enough money
+        """
         if self._price <= money:
             return self._equipment
         raise ValueError("you dont have enough money")
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
