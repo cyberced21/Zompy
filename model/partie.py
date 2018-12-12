@@ -20,6 +20,7 @@ class Partie():
         self.ennemis = pygame.sprite.Group()
         self.spriteGroup = pygame.sprite.Group()
         self.crates = pygame.sprite.Group()
+        self.crates_obj = []
         self.balles = pygame.sprite.Group()
         self.joueur = personnages.Hero("cedrik",100,[equipments.DefaultPistol()],imagePerso,(0,0),0)
         self.listeNbEnnemis = [5, 9, 12, 15, 19, 22, 25, 27, 30, 35]
@@ -59,6 +60,7 @@ class Partie():
         text_rect.midtop = (constantes.LARGEUR-145, 0)
         surf.blit(text_surface, text_rect)
 
+
     # Demarre une partie
     def jouer(self):
         niveauTermine = False
@@ -76,7 +78,8 @@ class Partie():
             # Si le niveau actuel est termine, on demarre le niveau suivant
             if(niveauTermine):
                 timer = (pygame.time.get_ticks() - timerstart) / 1000
-                self.crates.add(Magasin.Crate(100,equipments.DefaultPistol()))
+                self.crates.add(Magasin.Crate(100,equipments.Canon()))
+                self.crates_obj.append(Magasin.Crate(100,equipments.Canon()))
                 self.crates.update()
                 self.crates.draw(self.fenetre)
                 if(timer >= constantes.interval_niveaux):
@@ -113,15 +116,25 @@ class Partie():
 
             # Verifie si une balle a touche un ennemi
             hits = pygame.sprite.groupcollide(self.ennemis, self.balles, True, True)
+            crate_hits = pygame.sprite.groupcollide(self.crates,self.balles,True,True)
+
             # Si oui, on le regenere
             for hit in hits:
                 self.score += 1
                 self.joueur.receiveMoney(1)
+
                 # Verifie si le niveau est termine
                 if(len(self.ennemis) == 0):
                     self.joueur.receiveMoney(10)
                     niveauTermine = True
                     timerstart = pygame.time.get_ticks()
+
+            for hit in crate_hits:
+                self.joueur.spendMoney(100)
+                self.joueur.addEquipment(self.crates_obj[0].buyCrate(100))
+                self.crates.remove(self.crates_obj)
+                self.crates.update()
+
 
             # Verifie si le joueur s'est fait toucher
             hits = pygame.sprite.spritecollide(self.joueur, self.ennemis, False)
@@ -129,7 +142,7 @@ class Partie():
                 self.running = False
 
             # Dessiner
-            self.fenetre.fill((56, 26, 164))
+            self.fenetre.fill((25, 25, 25, 25))
             self.spriteGroup.draw(self.fenetre)
             self.drawCurrentWeapon(self.fenetre,self.joueur.getCurrentEquipment().name)
             self.drawScore(self.fenetre, str(self.score))

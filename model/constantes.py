@@ -24,6 +24,8 @@ perso2Chemin = os.path.join(repertoire_images, "perso2.jpg")
 perso2 = pygame.transform.scale(pygame.image.load(perso2Chemin),(67,94))
 perso3Chemin = os.path.join(repertoire_images, "perso3.jpg")
 perso3 = pygame.transform.scale(pygame.image.load(perso3Chemin),(67,94))
+crate_canon_chemin=os.path.join(repertoire_images, "Canon_crate.png")
+crate_canon=pygame.transform.scale(pygame.image.load(crate_canon_chemin),(67,94))
 
 
 # Mise en place de l'image du menu

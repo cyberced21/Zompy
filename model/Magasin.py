@@ -1,10 +1,10 @@
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" or __name__ == "Magasin":
     import equipments
     import pygame
-    import random
     import constantes
+    import random
 else:
     from . import equipments
     from . import constantes
@@ -17,8 +17,7 @@ class Crate(pygame.sprite.Sprite):
     """
     def __init__(self,price,equipment):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 50))
-        self.image.fill((215, 205, 145))
+        self.image = constantes.crate_canon
         self.rect = self.image.get_rect()
         self.rect.x = 500
         self.rect.y = 300
@@ -28,6 +27,8 @@ class Crate(pygame.sprite.Sprite):
     @property
     def equipment(self):
         """
+        Faite par cedrik blais
+
         >>> lol=Crate(12,equipments.DefaultPistol())
         >>> lol.equipment.name
         'Default Pistol'
@@ -41,6 +42,8 @@ class Crate(pygame.sprite.Sprite):
     @property
     def price(self):
         """
+        Faite par cedrik blais
+
         >>> lol=Crate(12,equipments.DefaultPistol())
         >>> lol.price
         12
@@ -53,6 +56,8 @@ class Crate(pygame.sprite.Sprite):
 
     def buyCrate(self,money):
         """
+        Faite par cedrik blais
+
         >>> lol=Crate(12,equipments.DefaultPistol())
         >>> buy_equip = lol.buyCrate(20)
         >>> buy_equip.name
@@ -68,6 +73,7 @@ class Crate(pygame.sprite.Sprite):
         if self._price <= money:
             return self._equipment
         raise ValueError("you dont have enough money")
+
 
 if __name__ == "__main__":
     import doctest
