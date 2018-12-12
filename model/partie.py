@@ -1,8 +1,12 @@
-import pygame
-from . import constantes
-from . import personnages
-from . import niveau
-from . import equipments
+if __name__ == "__main__" or __name__ == "partie":
+    import pygame
+    import equipments
+else:
+    import pygame
+    from . import constantes
+    from . import personnages
+    from . import niveau
+    from . import equipments
 
 class Partie():
     """
