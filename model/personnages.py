@@ -56,6 +56,9 @@ class Personnage(pygame.sprite.Sprite):
         >>> p.addEquipment("b")
         >>> p.equipment
         ['a', 'b']
+        >>>p.setCurrentEquipment()
+        >>>p.getCurrentEquipment()
+        'b'
         >>> p.removeEquipment()
         >>> p.equipment
         ['a']
